@@ -7,3 +7,13 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+[
+    { description: "Buy groceries" },
+    { description: "Clean the house" },
+    { description: "Walk the dog" },
+    { description: "Do the laundry" },
+    { description: "Water the plants" }
+].each do |task|
+    Task.find_or_create_by!(task)
+end

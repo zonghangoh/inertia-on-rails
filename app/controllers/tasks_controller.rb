@@ -2,16 +2,16 @@ class TasksController < ApplicationController
     def index
         tasks = Task.all
 
-        render inertia: "TasksIndex", props: { tasks: }
+        render inertia: "TasksIndex", props: { tasks:, errors: [] }
     end
 
     def create
-        @task = Task.new(task_params)
+        task = Task.new(task_params)
         
-        if @task.save
-            head :ok
+        if task.save
+            redirect_to tasks_path
         else
-            head :bad_request
+            render inertia: "TasksIndex", props: { errors: task.errors }
         end
     end
     
@@ -28,6 +28,6 @@ class TasksController < ApplicationController
     private
 
     def task_params
-        params.require(:task).permit(:done, :description)
+        params.permit(:done, :description)
     end
 end
