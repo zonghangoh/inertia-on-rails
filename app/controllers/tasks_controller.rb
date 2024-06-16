@@ -2,8 +2,7 @@ class TasksController < ApplicationController
     def index
         tasks = Task.all
 
-        render inertia: "TasksIndex", props: { tasks:, errors: [] }
-    end
+        render inertia: "TasksIndex", props: { tasks: }
 
     def create
         task = Task.new(task_params)
@@ -16,9 +15,9 @@ class TasksController < ApplicationController
     end
     
     def mark_as_done
-        @task = Task.find(params[:id])
+        task = Task.find(params[:id])
 
-        if @task.update(done: true)
+        if task.update(done: true)
             head :ok
         else
             head :bad_request
