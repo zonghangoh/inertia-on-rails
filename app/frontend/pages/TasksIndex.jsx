@@ -1,7 +1,10 @@
 import { useForm } from '@inertiajs/react';
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 
-const TasksIndexPage = ({ tasks }) => {
+const TasksIndexPage = (props) => {
+    const [tasks, setTasks] = useState(props.tasks);
+
     const { 
         data, 
         setData, 
@@ -12,8 +15,19 @@ const TasksIndexPage = ({ tasks }) => {
     } = useForm();  
 
     const tasksList = tasks.map(task => (
-        <li key={task.id}>{task.description}</li>
+        <li
+        onClick={() => markTaskAsCompleted(task.id)}
+        className={ task.done ? 'line-through' : ''}
+        key={task.id}>{task.description} {task.done}</li>
     ));
+
+    const markTaskAsCompleted = async (taskId) => {
+        tasks.find(task => task.id === taskId).done = true;
+        setTasks([...tasks]);
+
+        const result = await axios.patch(`/tasks/${taskId}/mark_as_done`, {});
+        console.log(result)
+    };
 
     return <div className="max-w-xl mx-auto pt-24">
         <h1 className="text-2xl mb-8">Tasks</h1>
