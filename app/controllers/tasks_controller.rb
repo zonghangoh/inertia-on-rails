@@ -1,6 +1,8 @@
-class TasksController < ActionController::Base
+class TasksController < ApplicationController
     def index
-        @tasks = Task.all
+        tasks = Task.all
+
+        render inertia: "TasksIndex", props: { tasks: }
     end
 
     def create
