@@ -3,6 +3,7 @@ class TasksController < ApplicationController
         tasks = Task.all
 
         render inertia: "TasksIndex", props: { tasks: }
+    end
 
     def create
         task = Task.new(task_params)
